@@ -9,7 +9,7 @@ function About(){
                 <div className="about-hero">
                     <div className="about-photo">
                         <img 
-                            src="/src/assets/natnael.jpg" 
+                            src="/src/assets/Natnael Photo.jpg" 
                             alt="Natnael Zewday - Professional Headshot" 
                             className="profile-photo"
                         />
