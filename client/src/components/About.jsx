@@ -1,4 +1,4 @@
-import natnaelPhoto from '../assets/Natnael Photo.jpg';
+import natnaelPhoto from '../assets/natnael.jpg';
 import resumeFile from '../assets/Software Engineer Technology Resume  .docx';
 
 function About(){

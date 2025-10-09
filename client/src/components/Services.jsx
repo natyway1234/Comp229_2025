@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { servicesAPI } from '../api';
-import webDevLogo from '../assets/Website Development Logo.jpg';
-import mobileDevLogo from '../assets/Mobile app development.jpg';
+import webDevLogo from '../assets/website development logo.jpg';
+import mobileDevLogo from '../assets/mobile app.jpg';
 
 function Services(){
     const [services, setServices] = useState([]);
