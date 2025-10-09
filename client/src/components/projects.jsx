@@ -78,63 +78,94 @@ function Projects(){
 
     return(
         <div className="projects-page">
-            <h3>Projects</h3>
+            <h3>PROJECTS</h3>
             
-            {/* Project Form */}
+            {/* Project Form Section */}
             <div className="project-form-section">
-                <h4>Add New Project</h4>
-                <form onSubmit={handleSubmit} className="project-form">
-                    <div className="form-row">
-                        <input
-                            type="text"
-                            placeholder="Project Title"
-                            value={formData.title}
-                            onChange={(e) => setFormData({...formData, title: e.target.value})}
-                            required
-                        />
-                        <input
-                            type="date"
-                            placeholder="Completion Date"
-                            value={formData.completion}
-                            onChange={(e) => setFormData({...formData, completion: e.target.value})}
-                            required
-                        />
-                    </div>
-                    <textarea
-                        placeholder="Description"
-                        value={formData.description}
-                        onChange={(e) => setFormData({...formData, description: e.target.value})}
-                        required
-                    />
-                    <button type="submit">Add Project</button>
-                </form>
+                <div className="form-container">
+                    <h4>ADD NEW PROJECT</h4>
+                    <p className="form-description">Create and manage your project portfolio</p>
+                    <form onSubmit={handleSubmit} className="project-form">
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="project-title">Project Title *</label>
+                                <input
+                                    type="text"
+                                    id="project-title"
+                                    placeholder="Enter project title"
+                                    value={formData.title}
+                                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="completion-date">Completion Date *</label>
+                                <input
+                                    type="date"
+                                    id="completion-date"
+                                    placeholder="Select completion date"
+                                    value={formData.completion}
+                                    onChange={(e) => setFormData({...formData, completion: e.target.value})}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="project-description">Project Description *</label>
+                            <textarea
+                                id="project-description"
+                                placeholder="Describe your project details, technologies used, and key features"
+                                value={formData.description}
+                                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                                required
+                                rows="4"
+                            />
+                        </div>
+                        <button type="submit" className="submit-project-btn">
+                            <span className="btn-text">ADD PROJECT</span>
+                            <span className="btn-icon">+</span>
+                        </button>
+                    </form>
+                </div>
             </div>
 
-            {/* Static Projects Display */}
-            <h4>Featured Projects</h4>
-            <ListComponent items={data}/>
+            {/* Featured Projects Section */}
+            <div className="featured-projects-section">
+                <h4>FEATURED PROJECTS</h4>
+                <p className="section-description">Showcase of my best work and portfolio highlights</p>
+                <ListComponent items={data}/>
+            </div>
             
-            {/* Dynamic Projects from Backend */}
-            <h4>Stored Projects ({projects.length})</h4>
-            {loading ? (
-                <p>Loading projects...</p>
-            ) : (
-                <div className="projects-grid">
-                    {projects.map((project) => (
-                        <div key={project._id} className="project-card">
-                            <h5>{project.title}</h5>
-                            <p>Completion: {new Date(project.completion).toLocaleDateString()}</p>
-                            <p>Description: {project.description}</p>
-                            <button 
-                                onClick={() => handleDelete(project._id)}
-                                className="delete-btn"
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            )}
+            {/* Dynamic Projects Section */}
+            <div className="stored-projects-section">
+                <h4>STORED PROJECTS ({projects.length})</h4>
+                <p className="section-description">Projects saved to the database</p>
+                {loading ? (
+                    <div className="loading-container">
+                        <p>Loading projects...</p>
+                    </div>
+                ) : (
+                    <div className="projects-grid">
+                        {projects.map((project) => (
+                            <div key={project._id} className="project-card">
+                                <div className="project-header">
+                                    <h5>{project.title}</h5>
+                                    <span className="completion-date">
+                                        {new Date(project.completion).toLocaleDateString()}
+                                    </span>
+                                </div>
+                                <p className="project-description">{project.description}</p>
+                                <button 
+                                    onClick={() => handleDelete(project._id)}
+                                    className="delete-btn"
+                                >
+                                    <span>DELETE</span>
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
             
             {/* Footer */}
             <footer className="site-footer">
