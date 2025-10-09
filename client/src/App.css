@@ -628,11 +628,176 @@ section{ margin-block: 3rem; }
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
   max-width: 1000px;
   width: 100%;
   margin: 2rem auto 0;
   justify-items: center;
+}
+
+/* Project Form Section */
+.project-form-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 12px rgba(212, 175, 55, 0.4);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  margin: 2rem auto;
+  max-width: 800px;
+  width: 100%;
+}
+
+.project-form-section h4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.project-form .form-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.project-form .form-row input[type="text"],
+.project-form .form-row input[type="date"] {
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid rgba(201, 161, 74, 0.3);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(201, 161, 74, 0.05);
+  color: #e4d3b5;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.project-form .form-row input:focus {
+  outline: none;
+  border-color: rgba(201, 161, 74, 0.6);
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.2);
+  background: rgba(201, 161, 74, 0.1);
+}
+
+.project-form textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(201, 161, 74, 0.3);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(201, 161, 74, 0.05);
+  color: #e4d3b5;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.project-form textarea:focus {
+  outline: none;
+  border-color: rgba(201, 161, 74, 0.6);
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.2);
+  background: rgba(201, 161, 74, 0.1);
+}
+
+.project-form button {
+  background: linear-gradient(135deg, rgba(31, 44, 52, 0.9) 0%, rgba(14, 27, 36, 0.8) 100%);
+  color: #e4d3b5;
+  border: 2px solid rgba(201, 161, 74, 0.4);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  align-self: center;
+  min-width: 200px;
+  backdrop-filter: blur(8px);
+}
+
+.project-form button:hover {
+  background: linear-gradient(135deg, rgba(201, 161, 74, 0.15) 0%, rgba(31, 44, 52, 0.9) 50%, rgba(201, 161, 74, 0.15) 100%);
+  transform: translateY(-3px);
+  color: #e4d3b5;
+  box-shadow: 0 8px 32px rgba(201, 161, 74, 0.3);
+  border-color: #C9A14A;
+}
+
+/* Stored Projects Section */
+.stored-projects-section {
+  margin: 3rem auto;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.stored-projects-section h4 {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+}
+
+.project-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 12px rgba(212, 175, 55, 0.4);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.6);
+  border-color: #d4af37;
+}
+
+.project-card h5 {
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+.project-card p {
+  margin-bottom: 0.8rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.8) 0%, rgba(185, 28, 28, 0.9) 100%);
+  color: white;
+  border: 2px solid rgba(220, 38, 38, 0.4);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(185, 28, 28, 1) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+  border-color: #dc2626;
 }
 
 /* Services Grid Layout */
@@ -645,6 +810,154 @@ section{ margin-block: 3rem; }
   margin: 3rem auto 0;
   justify-items: center;
   align-items: start;
+}
+
+/* Service Form Section */
+.service-form-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 12px rgba(212, 175, 55, 0.4);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  margin: 2rem auto;
+  max-width: 600px;
+  width: 100%;
+}
+
+.service-form-section h4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.service-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.service-form input,
+.service-form textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(201, 161, 74, 0.3);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(201, 161, 74, 0.05);
+  color: #e4d3b5;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.service-form input:focus,
+.service-form textarea:focus {
+  outline: none;
+  border-color: rgba(201, 161, 74, 0.6);
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.2);
+  background: rgba(201, 161, 74, 0.1);
+}
+
+.service-form textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.service-form button {
+  background: linear-gradient(135deg, rgba(31, 44, 52, 0.9) 0%, rgba(14, 27, 36, 0.8) 100%);
+  color: #e4d3b5;
+  border: 2px solid rgba(201, 161, 74, 0.4);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  align-self: center;
+  min-width: 200px;
+  backdrop-filter: blur(8px);
+}
+
+.service-form button:hover {
+  background: linear-gradient(135deg, rgba(201, 161, 74, 0.15) 0%, rgba(31, 44, 52, 0.9) 50%, rgba(201, 161, 74, 0.15) 100%);
+  transform: translateY(-3px);
+  color: #e4d3b5;
+  box-shadow: 0 8px 32px rgba(201, 161, 74, 0.3);
+  border-color: #C9A14A;
+}
+
+/* Stored Services Section */
+.stored-services-section {
+  margin: 3rem auto;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.stored-services-section h4 {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+}
+
+/* Stored Contacts Section */
+.stored-contacts-section {
+  margin: 3rem auto;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.stored-contacts-section h4 {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+}
+
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-item {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 12px rgba(212, 175, 55, 0.4);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contact-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.6);
+  border-color: #d4af37;
+}
+
+.contact-info h5 {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+.contact-info p {
+  color: var(--text);
+  line-height: 1.6;
 }
 
 .service-card {
@@ -707,6 +1020,17 @@ section{ margin-block: 3rem; }
     gap: 1.5rem;
     max-width: 700px;
   }
+  
+  .project-form-section,
+  .service-form-section {
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+  }
+  
+  .project-form .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -722,6 +1046,23 @@ section{ margin-block: 3rem; }
     gap: 1.5rem;
     padding: 0 1rem;
     max-width: 400px;
+  }
+  
+  .project-form-section,
+  .service-form-section {
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+  
+  .project-form .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .contact-item {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
   }
   
   .row img {
@@ -751,6 +1092,24 @@ section{ margin-block: 3rem; }
     gap: 1rem;
     padding: 0 0.5rem;
     max-width: 350px;
+  }
+  
+  .project-form-section,
+  .service-form-section {
+    margin: 0.5rem auto;
+    padding: 1rem;
+  }
+  
+  .project-form .form-row {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .contact-item {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+    padding: 1.5rem;
   }
   
   .row {
