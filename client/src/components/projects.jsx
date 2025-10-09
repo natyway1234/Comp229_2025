@@ -1,7 +1,7 @@
 import ListComponent from "./ListComponent";
-import aiLogo from '../assets/AI Logo.png';
-import luxuryLogo from '../assets/Luxury Logo.png';
-import yabuFitnessLogo from '../assets/Yabu fitness Logo.png';
+import aiLogo from '../assets/ai logo.png';
+import luxuryLogo from '../assets/luxry motors.png';
+import yabuFitnessLogo from '../assets/yabufitness logo.png';
 
 const data = [
      { 
