@@ -1,4 +1,4 @@
-import natnaelPhoto from '../assets/natnael.jpg';
+// Image served from public directory
 
 function About(){
     return (
@@ -9,9 +9,9 @@ function About(){
                 {/* Hero Section */}
                 <div className="about-hero">
                     <div className="about-photo">
-                        <img
-                            src={natnaelPhoto}
-                            alt="Natnael Zewday - Professional Headshot"
+                        <img 
+                            src="/natnael.jpg" 
+                            alt="Natnael Zewday - Professional Headshot" 
                             className="profile-photo"
                         />
                     </div>

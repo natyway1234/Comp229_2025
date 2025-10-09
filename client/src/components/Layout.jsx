@@ -1,13 +1,13 @@
 // Layout component containing navigation bar and custom logo
 import { Link } from 'react-router-dom';
-import logo from "../assets/robintech logo.png"
+// Logo served from public directory
 
 function Layout() {
     return (
         <>
             <div className="header-container">
                 <div className="header-title-section">
-                    <img src={logo} alt="Logo" className='logo'/>
+                    <img src="/robintech_logo.png" alt="Logo" className='logo'/>
                     <h1>RobinTech Web Co.</h1>
                 </div>
                 {/* Navigation bar positioned in top right */}
