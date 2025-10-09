@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { servicesAPI } from '../api';
+import webDevLogo from '../assets/Website Development Logo.jpg';
+import mobileDevLogo from '../assets/Mobile app development.jpg';
 
 function Services(){
     const [services, setServices] = useState([]);
@@ -80,14 +82,14 @@ function Services(){
             <h4>Featured Services</h4>
             <div className="services-grid">
                 <div className="service-card">
-                    <img src="/src/assets/Website Development Logo.jpg" alt="Web Development" />
+                    <img src={webDevLogo} alt="Web Development" />
                     <div className="text-content">
                         <h3>Web Development</h3>
                         <p>Custom web applications built with modern frameworks like React, Vue.js, and Angular. I specialize in responsive design, performance optimization, and user experience enhancement. Services include frontend development, API integration, and cross-browser compatibility.</p>
                     </div>
                 </div>
                 <div className="service-card">
-                    <img src="/src/assets/Mobile app development.jpg" alt="Mobile App Development" />
+                    <img src={mobileDevLogo} alt="Mobile App Development" />
                     <div className="text-content">
                         <h3>Mobile App Development</h3>
                         <p>Native and cross-platform mobile applications for iOS and Android. Using React Native and Flutter, I create high-performance mobile apps with intuitive user interfaces. Services include app design, development, testing, and App Store deployment.</p>
