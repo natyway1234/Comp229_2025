@@ -4,15 +4,4 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3001, // Make sure frontend runs on different port than backend
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000', // Your backend URL
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
-  assetsInclude: ['**/*.docx', '**/*.pdf', '**/*.zip'], // Treat these files as assets
 })

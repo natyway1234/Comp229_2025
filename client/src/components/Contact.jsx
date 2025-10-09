@@ -1,33 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { contactsAPI } from '../api';
 
 function Contact() {
     const navigate = useNavigate();
-    const [contacts, setContacts] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
-        email: ''
+        firstName: '',
+        lastName: '',
+        contactNumber: '',
+        email: '',
+        message: ''
     });
-
-    // Load contacts when component mounts
-    useEffect(() => {
-        loadContacts();
-    }, []);
-
-    const loadContacts = async () => {
-        setLoading(true);
-        try {
-            const data = await contactsAPI.getAll();
-            setContacts(data);
-        } catch (error) {
-            console.error('Failed to load contacts:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     // Handle form input changes
     const handleInputChange = (e) => {
@@ -39,30 +21,16 @@ function Contact() {
     };
 
     // Handle form submission
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            await contactsAPI.create(formData);
-            setFormData({ firstname: '', lastname: '', email: '' });
-            loadContacts(); // Reload the list
-            alert('Contact added successfully!');
-        } catch (error) {
-            console.error('Failed to create contact:', error);
-            alert('Failed to add contact');
-        }
-    };
-
-    const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this contact?')) {
-            try {
-                await contactsAPI.delete(id);
-                loadContacts(); // Reload the list
-                alert('Contact deleted successfully!');
-            } catch (error) {
-                console.error('Failed to delete contact:', error);
-                alert('Failed to delete contact');
-            }
-        }
+        // Log form data to console (as per requirement - doesn't need to be fully functional)
+        console.log('Form submitted with data:', formData);
+        
+        // Show alert to user
+        alert('Thank you for your message! Redirecting to Home page...');
+        
+        // Redirect to Home page
+        navigate('/');
     };
 
     return (
@@ -87,23 +55,23 @@ function Contact() {
                 <form onSubmit={handleSubmit} className="contact-form">
                     <div className="form-row">
                         <div className="form-group">
-                            <label htmlFor="firstname">First Name *</label>
+                            <label htmlFor="firstName">First Name *</label>
                             <input
                                 type="text"
-                                id="firstname"
-                                name="firstname"
-                                value={formData.firstname}
+                                id="firstName"
+                                name="firstName"
+                                value={formData.firstName}
                                 onChange={handleInputChange}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="lastname">Last Name *</label>
+                            <label htmlFor="lastName">Last Name *</label>
                             <input
                                 type="text"
-                                id="lastname"
-                                name="lastname"
-                                value={formData.lastname}
+                                id="lastName"
+                                name="lastName"
+                                value={formData.lastName}
                                 onChange={handleInputChange}
                                 required
                             />
@@ -111,6 +79,17 @@ function Contact() {
                     </div>
                     
                     <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="contactNumber">Contact Number *</label>
+                            <input
+                                type="tel"
+                                id="contactNumber"
+                                name="contactNumber"
+                                value={formData.contactNumber}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
                         <div className="form-group">
                             <label htmlFor="email">Email Address *</label>
                             <input
@@ -124,32 +103,22 @@ function Contact() {
                         </div>
                     </div>
                     
+                    <div className="form-group">
+                        <label htmlFor="message">Message *</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            value={formData.message}
+                            onChange={handleInputChange}
+                            rows="5"
+                            placeholder="Tell me about your project or how I can help you..."
+                            required
+                        ></textarea>
+                    </div>
+                    
                     <button type="submit" className="submit-btn">Send Message</button>
                 </form>
                 </div>
-            </div>
-
-            {/* Contacts List Section */}
-            <div className="contacts-list-section">
-                <h4>Stored Contacts ({contacts.length})</h4>
-                {loading ? (
-                    <p>Loading contacts...</p>
-                ) : (
-                    <div className="contacts-grid">
-                        {contacts.map((contact) => (
-                            <div key={contact._id} className="contact-card">
-                                <h5>{contact.firstname} {contact.lastname}</h5>
-                                <p>Email: {contact.email}</p>
-                                <button 
-                                    onClick={() => handleDelete(contact._id)}
-                                    className="delete-btn"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </div>
             
             {/* Footer */}

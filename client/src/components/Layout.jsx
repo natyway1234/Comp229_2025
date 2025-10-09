@@ -1,6 +1,6 @@
 // Layout component containing navigation bar and custom logo
 import { Link } from 'react-router-dom';
-import logo from "../assets/robintech logo.png"
+import logo from "../assets/Robintech logo.png"
 
 function Layout() {
     return (
