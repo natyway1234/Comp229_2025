@@ -55,7 +55,7 @@ body, p, span, div, a, .nav-button, .submit-btn {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-image: url('./assets/background.jpg');
+  background: linear-gradient(135deg, #0B1426 0%, #1A2332 50%, #0B1426 100%), url('/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -772,7 +772,7 @@ section{ margin-block: 3rem; }
   min-height: calc(100svh - var(--nav-h));
   margin: 0;
   padding: 6rem 2rem 0;
-  background-image: url('./assets/background.jpg');
+  background: linear-gradient(135deg, #0B1426 0%, #1A2332 50%, #0B1426 100%), url('/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2083,52 +2083,44 @@ html {
 /* High DPI display optimizations for background images */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .home, .about-page, .contact-page, .projects-page, .services-page {
-    background-image: url('./assets/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: auto;
-  image-rendering: high-quality;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: transform;
+    background: linear-gradient(135deg, #0B1426 0%, #1A2332 50%, #0B1426 100%), url('/background.jpg');
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    image-rendering: auto;
     image-rendering: high-quality;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
 
 /* Ultra high DPI display optimizations */
 @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
   .home, .about-page, .contact-page, .projects-page, .services-page {
-    background-image: url('./assets/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: auto;
-  image-rendering: high-quality;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: transform;
+    background: linear-gradient(135deg, #0B1426 0%, #1A2332 50%, #0B1426 100%), url('/background.jpg');
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    image-rendering: auto;
     image-rendering: high-quality;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
 
