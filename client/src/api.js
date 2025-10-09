@@ -1,26 +1,40 @@
 // src/api.js
 const API_BASE_URL = '/api'; // This will be proxied to your backend
+const FALLBACK_URL = 'http://localhost:3000/api'; // Direct backend URL as fallback
 
 // Generic API call function
 const apiCall = async (endpoint, options = {}) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+  const urls = [`${API_BASE_URL}${endpoint}`, `${FALLBACK_URL}${endpoint}`];
+  
+  for (let i = 0; i < urls.length; i++) {
+    try {
+      console.log(`Making API call to: ${urls[i]}`);
+      
+      const response = await fetch(urls[i], {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+        ...options,
+      });
+      
+      console.log(`API Response status: ${response.status}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error(`API call failed for ${urls[i]}:`, error);
+      if (i === urls.length - 1) {
+        // If this is the last URL, throw the error
+        throw error;
+      }
+      // Otherwise, try the next URL
+      console.log(`Trying fallback URL...`);
     }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('API call failed:', error);
-    throw error;
   }
 };
 
