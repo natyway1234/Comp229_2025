@@ -14,4 +14,5 @@ export default defineConfig({
       },
     },
   },
+  assetsInclude: ['**/*.docx', '**/*.pdf', '**/*.zip'], // Treat these files as assets
 })
