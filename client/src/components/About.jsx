@@ -1,5 +1,4 @@
 import natnaelPhoto from '../assets/Natnael Photo.jpg';
-import resumeFile from '../assets/Software Engineer Technology Resume  .docx';
 
 function About(){
     return(
@@ -75,7 +74,7 @@ function About(){
                     <h4>Resume</h4>
                     <p>Download my resume to learn more about my professional experience and skills.</p>
                     <a 
-                        href={resumeFile} 
+                        href="/src/assets/Software Engineer Technology Resume  .docx" 
                         download="Natnael_Zewday_Resume.docx"
                         className="resume-link"
                     >
