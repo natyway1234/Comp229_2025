@@ -13,13 +13,25 @@ const apiCall = async (endpoint, options = {}) => {
     });
     
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
     
     return await response.json();
   } catch (error) {
     console.error('API call failed:', error);
     throw error;
+  }
+};
+
+// Utility function to handle API errors in components
+export const handleApiError = (error, setError) => {
+  const message = error.message || 'An unexpected error occurred';
+  if (setError) {
+    setError(message);
+  } else {
+    console.error('API Error:', message);
+    alert(message);
   }
 };
 
@@ -36,6 +48,7 @@ export const contactsAPI = {
     body: JSON.stringify(contact),
   }),
   delete: (id) => apiCall(`/contacts/${id}`, { method: 'DELETE' }),
+  deleteAll: () => apiCall('/contacts', { method: 'DELETE' }),
 };
 
 // Projects API
@@ -51,6 +64,7 @@ export const projectsAPI = {
     body: JSON.stringify(project),
   }),
   delete: (id) => apiCall(`/projects/${id}`, { method: 'DELETE' }),
+  deleteAll: () => apiCall('/projects', { method: 'DELETE' }),
 };
 
 // Services API
@@ -66,6 +80,7 @@ export const servicesAPI = {
     body: JSON.stringify(service),
   }),
   delete: (id) => apiCall(`/services/${id}`, { method: 'DELETE' }),
+  deleteAll: () => apiCall('/services', { method: 'DELETE' }),
 };
 
 // Users API
@@ -81,4 +96,5 @@ export const usersAPI = {
     body: JSON.stringify(user),
   }),
   delete: (id) => apiCall(`/users/${id}`, { method: 'DELETE' }),
+  deleteAll: () => apiCall('/users', { method: 'DELETE' }),
 };
