@@ -5,6 +5,7 @@ function Services(){
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [editingId, setEditingId] = useState(null);
     const [formData, setFormData] = useState({
         title: '',
         description: ''
@@ -30,15 +31,38 @@ function Services(){
         e.preventDefault();
         setLoading(true);
         try {
-            await servicesAPI.create(formData);
+            if (editingId) {
+                // Update existing service
+                await servicesAPI.update(editingId, formData);
+                alert('Service updated successfully!');
+            } else {
+                // Create new service
+                await servicesAPI.create(formData);
+                alert('Service added successfully!');
+            }
             setFormData({ title: '', description: '' });
+            setEditingId(null);
             loadServices();
-            alert('Service added successfully!');
         } catch (error) {
             handleApiError(error, setError);
         } finally {
             setLoading(false);
         }
+    };
+
+    // Handle edit button click
+    const handleEdit = (service) => {
+        setFormData({
+            title: service.title,
+            description: service.description
+        });
+        setEditingId(service._id);
+    };
+
+    // Handle cancel edit
+    const handleCancelEdit = () => {
+        setFormData({ title: '', description: '' });
+        setEditingId(null);
     };
 
     const handleDelete = async (id) => {
@@ -58,7 +82,7 @@ function Services(){
             
             {/* Service Form */}
             <div className="service-form-section">
-                <h4>Add New Service</h4>
+                <h4>{editingId ? 'Edit Service' : 'Add New Service'}</h4>
                 <form onSubmit={handleSubmit} className="service-form">
                     <input
                         type="text"
@@ -73,7 +97,16 @@ function Services(){
                         onChange={(e) => setFormData({...formData, description: e.target.value})}
                         required
                     />
-                    <button type="submit">Add Service</button>
+                    <div className="form-actions">
+                        <button type="submit">
+                            {editingId ? 'Update Service' : 'Add Service'}
+                        </button>
+                        {editingId && (
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn">
+                                Cancel
+                            </button>
+                        )}
+                    </div>
                 </form>
             </div>
 
@@ -109,12 +142,20 @@ function Services(){
                             <div className="text-content">
                                 <h3>{service.title}</h3>
                                 <p>{service.description}</p>
-                                <button 
-                                    onClick={() => handleDelete(service._id)}
-                                    className="delete-btn"
-                                >
-                                    Delete
-                                </button>
+                                <div className="service-actions">
+                                    <button 
+                                        onClick={() => handleEdit(service)}
+                                        className="edit-btn"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(service._id)}
+                                        className="delete-btn"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}

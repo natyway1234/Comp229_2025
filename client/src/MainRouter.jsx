@@ -7,6 +7,7 @@ import NotFound from "./components/NotFound";
 import Layout from "./components/Layout";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
+import Users from "./components/Users";
 
 function MainRouter() {
     return (
@@ -20,6 +21,7 @@ function MainRouter() {
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/users" element={<Users />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>

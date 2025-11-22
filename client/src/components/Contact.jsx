@@ -7,6 +7,7 @@ function Contact() {
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [editingId, setEditingId] = useState(null);
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -39,20 +40,44 @@ function Contact() {
         }
     };
 
-    // Handle form submission
+    // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            await contactsAPI.create(formData);
+            if (editingId) {
+                // Update existing contact
+                await contactsAPI.update(editingId, formData);
+                alert('Contact updated successfully!');
+            } else {
+                // Create new contact
+                await contactsAPI.create(formData);
+                alert('Contact added successfully!');
+            }
             setFormData({ firstname: '', lastname: '', email: '' });
+            setEditingId(null);
             loadContacts();
-            alert('Contact added successfully!');
         } catch (error) {
             handleApiError(error, setError);
         } finally {
             setLoading(false);
         }
+    };
+
+    // Handle edit button click
+    const handleEdit = (contact) => {
+        setFormData({
+            firstname: contact.firstname,
+            lastname: contact.lastname,
+            email: contact.email
+        });
+        setEditingId(contact._id);
+    };
+
+    // Handle cancel edit
+    const handleCancelEdit = () => {
+        setFormData({ firstname: '', lastname: '', email: '' });
+        setEditingId(null);
     };
 
     // Handle contact deletion
@@ -86,7 +111,7 @@ function Contact() {
 
                 {/* Interactive Contact Form */}
                 <div className="contact-form-container">
-                <h4>Send Me a Message</h4>
+                <h4>{editingId ? 'Edit Contact' : 'Send Me a Message'}</h4>
                 <form onSubmit={handleSubmit} className="contact-form">
                     <div className="form-row">
                         <div className="form-group">
@@ -125,7 +150,16 @@ function Contact() {
                         />
                     </div>
                     
-                    <button type="submit" className="submit-btn">Send Message</button>
+                    <div className="form-actions">
+                        <button type="submit" className="submit-btn">
+                            {editingId ? 'Update Contact' : 'Send Message'}
+                        </button>
+                        {editingId && (
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn">
+                                Cancel
+                            </button>
+                        )}
+                    </div>
                 </form>
                 </div>
             </div>
@@ -145,12 +179,20 @@ function Contact() {
                                     <h5>{contact.firstname} {contact.lastname}</h5>
                                     <p>{contact.email}</p>
                                 </div>
-                                <button 
-                                    onClick={() => handleDelete(contact._id)}
-                                    className="delete-btn"
-                                >
-                                    Delete
-                                </button>
+                                <div className="contact-actions">
+                                    <button 
+                                        onClick={() => handleEdit(contact)}
+                                        className="edit-btn"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(contact._id)}
+                                        className="delete-btn"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </div>
                         ))}
                         {contacts.length === 0 && (

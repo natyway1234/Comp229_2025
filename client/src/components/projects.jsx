@@ -26,6 +26,7 @@ function Projects(){
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [editingId, setEditingId] = useState(null);
     const [formData, setFormData] = useState({
         title: '',
         completion: '',
@@ -52,15 +53,41 @@ function Projects(){
         e.preventDefault();
         setLoading(true);
         try {
-            await projectsAPI.create(formData);
+            if (editingId) {
+                // Update existing project
+                await projectsAPI.update(editingId, formData);
+                alert('Project updated successfully!');
+            } else {
+                // Create new project
+                await projectsAPI.create(formData);
+                alert('Project added successfully!');
+            }
             setFormData({ title: '', completion: '', description: '' });
+            setEditingId(null);
             loadProjects();
-            alert('Project added successfully!');
         } catch (error) {
             handleApiError(error, setError);
         } finally {
             setLoading(false);
         }
+    };
+
+    // Handle edit button click
+    const handleEdit = (project) => {
+        // Format date for input field (YYYY-MM-DD)
+        const completionDate = new Date(project.completion).toISOString().split('T')[0];
+        setFormData({
+            title: project.title,
+            completion: completionDate,
+            description: project.description
+        });
+        setEditingId(project._id);
+    };
+
+    // Handle cancel edit
+    const handleCancelEdit = () => {
+        setFormData({ title: '', completion: '', description: '' });
+        setEditingId(null);
     };
 
     const handleDelete = async (id) => {
@@ -81,7 +108,7 @@ function Projects(){
             
             {/* Project Form */}
             <div className="project-form-section">
-                <h4>Add New Project</h4>
+                <h4>{editingId ? 'Edit Project' : 'Add New Project'}</h4>
                 <form onSubmit={handleSubmit} className="project-form">
                     <div className="form-row">
                         <input
@@ -105,7 +132,16 @@ function Projects(){
                         onChange={(e) => setFormData({...formData, description: e.target.value})}
                         required
                     />
-                    <button type="submit">Add Project</button>
+                    <div className="form-actions">
+                        <button type="submit">
+                            {editingId ? 'Update Project' : 'Add Project'}
+                        </button>
+                        {editingId && (
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn">
+                                Cancel
+                            </button>
+                        )}
+                    </div>
                 </form>
             </div>
 
@@ -126,12 +162,20 @@ function Projects(){
                             <h5>{project.title}</h5>
                             <p>Completion: {new Date(project.completion).toLocaleDateString()}</p>
                             <p>Description: {project.description}</p>
-                            <button 
-                                onClick={() => handleDelete(project._id)}
-                                className="delete-btn"
-                            >
-                                Delete
-                            </button>
+                            <div className="project-actions">
+                                <button 
+                                    onClick={() => handleEdit(project)}
+                                    className="edit-btn"
+                                >
+                                    Edit
+                                </button>
+                                <button 
+                                    onClick={() => handleDelete(project._id)}
+                                    className="delete-btn"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     ))}
                     {projects.length === 0 && (
