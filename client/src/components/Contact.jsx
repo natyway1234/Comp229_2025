@@ -30,6 +30,7 @@ function Contact() {
 
     const loadContacts = async () => {
         setLoading(true);
+        setError(''); // Clear errors when loading
         try {
             const data = await contactsAPI.getAll();
             setContacts(data);
@@ -43,7 +44,9 @@ function Contact() {
     // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return; // Prevent duplicate submissions
         setLoading(true);
+        setError(''); // Clear previous errors
         try {
             if (editingId) {
                 // Update existing contact
@@ -83,12 +86,16 @@ function Contact() {
     // Handle contact deletion
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this contact?')) {
+            setLoading(true);
+            setError(''); // Clear previous errors
             try {
                 await contactsAPI.delete(id);
                 loadContacts();
                 alert('Contact deleted successfully!');
             } catch (error) {
                 handleApiError(error, setError);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -113,6 +120,7 @@ function Contact() {
                 <div className="contact-form-container">
                 <h4>{editingId ? 'Edit Contact' : 'Send Me a Message'}</h4>
                 <form onSubmit={handleSubmit} className="contact-form">
+                    {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <div className="form-row">
                         <div className="form-group">
                             <label htmlFor="firstname">First Name *</label>
@@ -123,6 +131,7 @@ function Contact() {
                                 value={formData.firstname}
                                 onChange={handleInputChange}
                                 required
+                                disabled={loading}
                             />
                         </div>
                         <div className="form-group">
@@ -134,6 +143,7 @@ function Contact() {
                                 value={formData.lastname}
                                 onChange={handleInputChange}
                                 required
+                                disabled={loading}
                             />
                         </div>
                     </div>
@@ -147,15 +157,16 @@ function Contact() {
                             value={formData.email}
                             onChange={handleInputChange}
                             required
+                            disabled={loading}
                         />
                     </div>
                     
                     <div className="form-actions">
-                        <button type="submit" className="submit-btn">
-                            {editingId ? 'Update Contact' : 'Send Message'}
+                        <button type="submit" className="submit-btn" disabled={loading}>
+                            {loading ? 'Processing...' : (editingId ? 'Update Contact' : 'Send Message')}
                         </button>
                         {editingId && (
-                            <button type="button" onClick={handleCancelEdit} className="cancel-btn">
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn" disabled={loading}>
                                 Cancel
                             </button>
                         )}
@@ -183,12 +194,14 @@ function Contact() {
                                     <button 
                                         onClick={() => handleEdit(contact)}
                                         className="edit-btn"
+                                        disabled={loading}
                                     >
                                         Edit
                                     </button>
                                     <button 
                                         onClick={() => handleDelete(contact._id)}
                                         className="delete-btn"
+                                        disabled={loading}
                                     >
                                         Delete
                                     </button>

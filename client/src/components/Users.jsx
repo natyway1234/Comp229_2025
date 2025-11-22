@@ -29,6 +29,7 @@ function Users() {
 
     const loadUsers = async () => {
         setLoading(true);
+        setError(''); // Clear errors when loading
         try {
             const data = await usersAPI.getAll();
             setUsers(data);
@@ -42,7 +43,9 @@ function Users() {
     // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return; // Prevent duplicate submissions
         setLoading(true);
+        setError(''); // Clear previous errors
         try {
             if (editingId) {
                 // Update existing user
@@ -83,12 +86,16 @@ function Users() {
     // Handle user deletion
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
+            setLoading(true);
+            setError(''); // Clear previous errors
             try {
                 await usersAPI.delete(id);
                 loadUsers();
                 alert('User deleted successfully!');
             } catch (error) {
                 handleApiError(error, setError);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -101,6 +108,7 @@ function Users() {
             <div className="user-form-section">
                 <h4>{editingId ? 'Edit User' : 'Add New User'}</h4>
                 <form onSubmit={handleSubmit} className="user-form">
+                    {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <div className="form-row">
                         <div className="form-group">
                             <label htmlFor="firstname">First Name *</label>
@@ -111,6 +119,7 @@ function Users() {
                                 value={formData.firstname}
                                 onChange={handleInputChange}
                                 required
+                                disabled={loading}
                             />
                         </div>
                         <div className="form-group">
@@ -122,6 +131,7 @@ function Users() {
                                 value={formData.lastname}
                                 onChange={handleInputChange}
                                 required
+                                disabled={loading}
                             />
                         </div>
                     </div>
@@ -135,6 +145,7 @@ function Users() {
                             value={formData.email}
                             onChange={handleInputChange}
                             required
+                            disabled={loading}
                         />
                     </div>
                     
@@ -148,15 +159,16 @@ function Users() {
                             onChange={handleInputChange}
                             required
                             placeholder={editingId ? "Enter new password" : "Enter password"}
+                            disabled={loading}
                         />
                     </div>
                     
                     <div className="form-actions">
-                        <button type="submit" className="submit-btn">
-                            {editingId ? 'Update User' : 'Add User'}
+                        <button type="submit" className="submit-btn" disabled={loading}>
+                            {loading ? 'Processing...' : (editingId ? 'Update User' : 'Add User')}
                         </button>
                         {editingId && (
-                            <button type="button" onClick={handleCancelEdit} className="cancel-btn">
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn" disabled={loading}>
                                 Cancel
                             </button>
                         )}
@@ -184,12 +196,14 @@ function Users() {
                                     <button 
                                         onClick={() => handleEdit(user)}
                                         className="edit-btn"
+                                        disabled={loading}
                                     >
                                         Edit
                                     </button>
                                     <button 
                                         onClick={() => handleDelete(user._id)}
                                         className="delete-btn"
+                                        disabled={loading}
                                     >
                                         Delete
                                     </button>

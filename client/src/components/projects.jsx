@@ -39,6 +39,7 @@ function Projects(){
 
     const loadProjects = async () => {
         setLoading(true);
+        setError(''); // Clear errors when loading
         try {
             const data = await projectsAPI.getAll();
             setProjects(data);
@@ -49,9 +50,20 @@ function Projects(){
         }
     };
 
+    // Handle form input changes
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return; // Prevent duplicate submissions
         setLoading(true);
+        setError(''); // Clear previous errors
         try {
             if (editingId) {
                 // Update existing project
@@ -92,12 +104,16 @@ function Projects(){
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this project?')) {
+            setLoading(true);
+            setError(''); // Clear previous errors
             try {
                 await projectsAPI.delete(id);
                 loadProjects();
                 alert('Project deleted successfully!');
             } catch (error) {
                 handleApiError(error, setError);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -110,34 +126,41 @@ function Projects(){
             <div className="project-form-section">
                 <h4>{editingId ? 'Edit Project' : 'Add New Project'}</h4>
                 <form onSubmit={handleSubmit} className="project-form">
+                    {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <div className="form-row">
                         <input
                             type="text"
+                            name="title"
                             placeholder="Project Title"
                             value={formData.title}
-                            onChange={(e) => setFormData({...formData, title: e.target.value})}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                         />
                         <input
                             type="date"
+                            name="completion"
                             placeholder="Completion Date"
                             value={formData.completion}
-                            onChange={(e) => setFormData({...formData, completion: e.target.value})}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                         />
                     </div>
                     <textarea
+                        name="description"
                         placeholder="Description"
                         value={formData.description}
-                        onChange={(e) => setFormData({...formData, description: e.target.value})}
+                        onChange={handleInputChange}
                         required
+                        disabled={loading}
                     />
                     <div className="form-actions">
-                        <button type="submit">
-                            {editingId ? 'Update Project' : 'Add Project'}
+                        <button type="submit" disabled={loading}>
+                            {loading ? 'Processing...' : (editingId ? 'Update Project' : 'Add Project')}
                         </button>
                         {editingId && (
-                            <button type="button" onClick={handleCancelEdit} className="cancel-btn">
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn" disabled={loading}>
                                 Cancel
                             </button>
                         )}
@@ -166,12 +189,14 @@ function Projects(){
                                 <button 
                                     onClick={() => handleEdit(project)}
                                     className="edit-btn"
+                                    disabled={loading}
                                 >
                                     Edit
                                 </button>
                                 <button 
                                     onClick={() => handleDelete(project._id)}
                                     className="delete-btn"
+                                    disabled={loading}
                                 >
                                     Delete
                                 </button>

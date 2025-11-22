@@ -17,6 +17,7 @@ function Services(){
 
     const loadServices = async () => {
         setLoading(true);
+        setError(''); // Clear errors when loading
         try {
             const data = await servicesAPI.getAll();
             setServices(data);
@@ -27,9 +28,20 @@ function Services(){
         }
     };
 
+    // Handle form input changes
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return; // Prevent duplicate submissions
         setLoading(true);
+        setError(''); // Clear previous errors
         try {
             if (editingId) {
                 // Update existing service
@@ -67,12 +79,16 @@ function Services(){
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this service?')) {
+            setLoading(true);
+            setError(''); // Clear previous errors
             try {
                 await servicesAPI.delete(id);
                 loadServices();
                 alert('Service deleted successfully!');
             } catch (error) {
                 handleApiError(error, setError);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -84,25 +100,30 @@ function Services(){
             <div className="service-form-section">
                 <h4>{editingId ? 'Edit Service' : 'Add New Service'}</h4>
                 <form onSubmit={handleSubmit} className="service-form">
+                    {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <input
                         type="text"
+                        name="title"
                         placeholder="Service Title"
                         value={formData.title}
-                        onChange={(e) => setFormData({...formData, title: e.target.value})}
+                        onChange={handleInputChange}
                         required
+                        disabled={loading}
                     />
                     <textarea
+                        name="description"
                         placeholder="Description"
                         value={formData.description}
-                        onChange={(e) => setFormData({...formData, description: e.target.value})}
+                        onChange={handleInputChange}
                         required
+                        disabled={loading}
                     />
                     <div className="form-actions">
-                        <button type="submit">
-                            {editingId ? 'Update Service' : 'Add Service'}
+                        <button type="submit" disabled={loading}>
+                            {loading ? 'Processing...' : (editingId ? 'Update Service' : 'Add Service')}
                         </button>
                         {editingId && (
-                            <button type="button" onClick={handleCancelEdit} className="cancel-btn">
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn" disabled={loading}>
                                 Cancel
                             </button>
                         )}
@@ -146,12 +167,14 @@ function Services(){
                                     <button 
                                         onClick={() => handleEdit(service)}
                                         className="edit-btn"
+                                        disabled={loading}
                                     >
                                         Edit
                                     </button>
                                     <button 
                                         onClick={() => handleDelete(service._id)}
                                         className="delete-btn"
+                                        disabled={loading}
                                     >
                                         Delete
                                     </button>
