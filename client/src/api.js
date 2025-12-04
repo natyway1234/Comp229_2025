@@ -1,6 +1,6 @@
 // src/api.js
-// Use backend running on localhost:3000 as the API base URL
-const API_BASE_URL = 'http://localhost:3000/api';
+// Use deployed backend as the API base URL
+const API_BASE_URL = 'https://comp229-backend-f9fs.onrender.com/api';
 
 // Generic API call function
 const apiCall = async (endpoint, options = {}) => {
