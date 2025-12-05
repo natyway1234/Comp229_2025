@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { contactsAPI, handleApiError } from '../api';
 
 function Contact() {
-    const navigate = useNavigate();
-    const { isAuthenticated } = useAuth();
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -46,11 +42,6 @@ function Contact() {
     // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!isAuthenticated()) {
-            alert('Please sign in or sign up to add or edit contacts.');
-            navigate('/signin');
-            return;
-        }
         if (loading) return; // Prevent duplicate submissions
         setLoading(true);
         setError(''); // Clear previous errors
@@ -76,11 +67,6 @@ function Contact() {
 
     // Handle edit button click
     const handleEdit = (contact) => {
-        if (!isAuthenticated()) {
-            alert('Please sign in or sign up to edit contacts.');
-            navigate('/signin');
-            return;
-        }
         setFormData({
             firstname: contact.firstname,
             lastname: contact.lastname,
@@ -97,11 +83,6 @@ function Contact() {
 
     // Handle contact deletion
     const handleDelete = async (id) => {
-        if (!isAuthenticated()) {
-            alert('Please sign in or sign up to delete contacts.');
-            navigate('/signin');
-            return;
-        }
         if (window.confirm('Are you sure you want to delete this contact?')) {
             setLoading(true);
             setError(''); // Clear previous errors
@@ -136,19 +117,6 @@ function Contact() {
                 {/* Interactive Contact Form */}
                 <div className="contact-form-container">
                 <h4>{editingId ? 'Edit Contact' : 'Send Me a Message'}</h4>
-                {!isAuthenticated() && (
-                    <div style={{ 
-                        padding: '15px', 
-                        backgroundColor: '#fff3cd', 
-                        border: '1px solid #ffc107', 
-                        borderRadius: '4px', 
-                        marginBottom: '15px' 
-                    }}>
-                        <p style={{ margin: 0 }}>
-                            <strong>Authentication Required:</strong> Please <Link to="/signin" style={{ color: '#007bff' }}>sign in</Link> or <Link to="/signup" style={{ color: '#007bff' }}>sign up</Link> to add or edit contacts.
-                        </p>
-                    </div>
-                )}
                 <form onSubmit={handleSubmit} className="contact-form">
                     {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <div className="form-row">
@@ -221,28 +189,20 @@ function Contact() {
                                     <p>{contact.email}</p>
                                 </div>
                                 <div className="contact-actions">
-                                    {isAuthenticated() ? (
-                                        <>
-                                            <button 
-                                                onClick={() => handleEdit(contact)}
-                                                className="edit-btn"
-                                                disabled={loading}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button 
-                                                onClick={() => handleDelete(contact._id)}
-                                                className="delete-btn"
-                                                disabled={loading}
-                                            >
-                                                Delete
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <p style={{ fontSize: '0.9em', color: '#666' }}>
-                                            <Link to="/signin" style={{ color: '#007bff' }}>Sign in</Link> to edit or delete
-                                        </p>
-                                    )}
+                                    <button 
+                                        onClick={() => handleEdit(contact)}
+                                        className="edit-btn"
+                                        disabled={loading}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(contact._id)}
+                                        className="delete-btn"
+                                        disabled={loading}
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         ))}

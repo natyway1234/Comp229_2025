@@ -8,8 +8,6 @@ import Layout from "./components/Layout";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
 import Users from "./components/Users";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
 
 function MainRouter() {
     return (
@@ -24,8 +22,6 @@ function MainRouter() {
                 <Route path="/services" element={<Services />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/users" element={<Users />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/signin" element={<SignIn />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>

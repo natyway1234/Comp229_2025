@@ -1,6 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, memo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useState, useEffect } from 'react';
 import { projectsAPI, handleApiError } from '../api';
 import ListComponent from "./ListComponent";
 
@@ -24,53 +22,9 @@ const data = [
           
 ]
 
-// Memoized Project Card Component for better performance
-const ProjectCard = memo(({ project, onEdit, onDelete, isAuthenticated, loading }) => {
-    const formattedDate = useMemo(() => {
-        return new Date(project.completion).toLocaleDateString();
-    }, [project.completion]);
-
-    return (
-        <div className="project-card">
-            <h5>{project.title}</h5>
-            <p>Completion: {formattedDate}</p>
-            <p>Description: {project.description}</p>
-            <div className="project-actions">
-                {isAuthenticated ? (
-                    <>
-                        <button 
-                            onClick={() => onEdit(project)}
-                            className="edit-btn"
-                            disabled={loading}
-                        >
-                            Edit
-                        </button>
-                        <button 
-                            onClick={() => onDelete(project._id)}
-                            className="delete-btn"
-                            disabled={loading}
-                        >
-                            Delete
-                        </button>
-                    </>
-                ) : (
-                    <p style={{ fontSize: '0.9em', color: '#666' }}>
-                        <Link to="/signin" style={{ color: '#007bff' }}>Sign in</Link> to edit or delete
-                    </p>
-                )}
-            </div>
-        </div>
-    );
-});
-
-ProjectCard.displayName = 'ProjectCard';
-
 function Projects(){
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate();
     const [projects, setProjects] = useState([]);
-    const [initialLoading, setInitialLoading] = useState(true);
-    const [formLoading, setFormLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [editingId, setEditingId] = useState(null);
     const [formData, setFormData] = useState({
@@ -83,43 +37,32 @@ function Projects(){
         loadProjects();
     }, []);
 
-    const loadProjects = useCallback(async () => {
-        setInitialLoading(true);
+    const loadProjects = async () => {
+        setLoading(true);
         setError(''); // Clear errors when loading
         try {
-            console.log('Loading projects...');
             const data = await projectsAPI.getAll();
-            console.log('Projects loaded:', data);
-            setProjects(Array.isArray(data) ? data : []);
+            setProjects(data);
         } catch (error) {
-            console.error('Error loading projects:', error);
             handleApiError(error, setError);
         } finally {
-            setInitialLoading(false);
+            setLoading(false);
         }
-    }, []);
-
-    // Get authentication status
-    const authenticated = isAuthenticated();
+    };
 
     // Handle form input changes
-    const handleInputChange = useCallback((e) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
-    }, []);
+    };
 
-    const handleSubmit = useCallback(async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!authenticated) {
-            alert('Please sign in or sign up to add or edit projects.');
-            navigate('/signin');
-            return;
-        }
-        if (formLoading) return; // Prevent duplicate submissions
-        setFormLoading(true);
+        if (loading) return; // Prevent duplicate submissions
+        setLoading(true);
         setError(''); // Clear previous errors
         try {
             if (editingId) {
@@ -137,17 +80,12 @@ function Projects(){
         } catch (error) {
             handleApiError(error, setError);
         } finally {
-            setFormLoading(false);
+            setLoading(false);
         }
-    }, [authenticated, formLoading, editingId, formData, navigate, loadProjects]);
+    };
 
     // Handle edit button click
-    const handleEdit = useCallback((project) => {
-        if (!authenticated) {
-            alert('Please sign in or sign up to edit projects.');
-            navigate('/signin');
-            return;
-        }
+    const handleEdit = (project) => {
         // Format date for input field (YYYY-MM-DD)
         const completionDate = new Date(project.completion).toISOString().split('T')[0];
         setFormData({
@@ -156,22 +94,17 @@ function Projects(){
             description: project.description
         });
         setEditingId(project._id);
-    }, [authenticated, navigate]);
+    };
 
     // Handle cancel edit
-    const handleCancelEdit = useCallback(() => {
+    const handleCancelEdit = () => {
         setFormData({ title: '', completion: '', description: '' });
         setEditingId(null);
-    }, []);
+    };
 
-    const handleDelete = useCallback(async (id) => {
-        if (!authenticated) {
-            alert('Please sign in or sign up to delete projects.');
-            navigate('/signin');
-            return;
-        }
+    const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this project?')) {
-            setFormLoading(true);
+            setLoading(true);
             setError(''); // Clear previous errors
             try {
                 await projectsAPI.delete(id);
@@ -180,18 +113,10 @@ function Projects(){
             } catch (error) {
                 handleApiError(error, setError);
             } finally {
-                setFormLoading(false);
+                setLoading(false);
             }
         }
-    }, [authenticated, navigate, loadProjects]);
-
-    // Debug: Log component state
-    console.log('Projects component render:', { 
-        projectsCount: projects.length, 
-        initialLoading, 
-        error,
-        authenticated 
-    });
+    };
 
     return(
         <div className="projects-page">
@@ -200,19 +125,6 @@ function Projects(){
             {/* Project Form */}
             <div className="project-form-section">
                 <h4>{editingId ? 'Edit Project' : 'Add New Project'}</h4>
-                {!authenticated && (
-                    <div style={{ 
-                        padding: '15px', 
-                        backgroundColor: '#fff3cd', 
-                        border: '1px solid #ffc107', 
-                        borderRadius: '4px', 
-                        marginBottom: '15px' 
-                    }}>
-                        <p style={{ margin: 0 }}>
-                            <strong>Authentication Required:</strong> Please <Link to="/signin" style={{ color: '#007bff' }}>sign in</Link> or <Link to="/signup" style={{ color: '#007bff' }}>sign up</Link> to add or edit projects.
-                        </p>
-                    </div>
-                )}
                 <form onSubmit={handleSubmit} className="project-form">
                     {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <div className="form-row">
@@ -223,7 +135,7 @@ function Projects(){
                             value={formData.title}
                             onChange={handleInputChange}
                             required
-                            disabled={formLoading}
+                            disabled={loading}
                         />
                         <input
                             type="date"
@@ -232,7 +144,7 @@ function Projects(){
                             value={formData.completion}
                             onChange={handleInputChange}
                             required
-                            disabled={formLoading}
+                            disabled={loading}
                         />
                     </div>
                     <textarea
@@ -241,14 +153,14 @@ function Projects(){
                         value={formData.description}
                         onChange={handleInputChange}
                         required
-                        disabled={formLoading}
+                        disabled={loading}
                     />
                     <div className="form-actions">
-                        <button type="submit" disabled={formLoading}>
-                            {formLoading ? 'Processing...' : (editingId ? 'Update Project' : 'Add Project')}
+                        <button type="submit" disabled={loading}>
+                            {loading ? 'Processing...' : (editingId ? 'Update Project' : 'Add Project')}
                         </button>
                         {editingId && (
-                            <button type="button" onClick={handleCancelEdit} className="cancel-btn" disabled={formLoading}>
+                            <button type="button" onClick={handleCancelEdit} className="cancel-btn" disabled={loading}>
                                 Cancel
                             </button>
                         )}
@@ -262,21 +174,34 @@ function Projects(){
             
             {/* Dynamic Projects from Backend */}
             <h4>Stored Projects ({projects.length})</h4>
-            {initialLoading ? (
+            {loading ? (
                 <p>Loading projects...</p>
             ) : error ? (
                 <p style={{color: 'red'}}>Error: {error}</p>
             ) : (
                 <div className="projects-grid">
                     {projects.map((project) => (
-                        <ProjectCard
-                            key={project._id}
-                            project={project}
-                            onEdit={handleEdit}
-                            onDelete={handleDelete}
-                            isAuthenticated={authenticated}
-                            loading={formLoading}
-                        />
+                        <div key={project._id} className="project-card">
+                            <h5>{project.title}</h5>
+                            <p>Completion: {new Date(project.completion).toLocaleDateString()}</p>
+                            <p>Description: {project.description}</p>
+                            <div className="project-actions">
+                                <button 
+                                    onClick={() => handleEdit(project)}
+                                    className="edit-btn"
+                                    disabled={loading}
+                                >
+                                    Edit
+                                </button>
+                                <button 
+                                    onClick={() => handleDelete(project._id)}
+                                    className="delete-btn"
+                                    disabled={loading}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
                     ))}
                     {projects.length === 0 && (
                         <p>No projects stored yet.</p>

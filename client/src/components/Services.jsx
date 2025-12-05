@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { servicesAPI, handleApiError } from '../api';
 
 function Services(){
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate();
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -43,11 +39,6 @@ function Services(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!isAuthenticated()) {
-            alert('Please sign in or sign up to add or edit services.');
-            navigate('/signin');
-            return;
-        }
         if (loading) return; // Prevent duplicate submissions
         setLoading(true);
         setError(''); // Clear previous errors
@@ -73,11 +64,6 @@ function Services(){
 
     // Handle edit button click
     const handleEdit = (service) => {
-        if (!isAuthenticated()) {
-            alert('Please sign in or sign up to edit services.');
-            navigate('/signin');
-            return;
-        }
         setFormData({
             title: service.title,
             description: service.description
@@ -92,11 +78,6 @@ function Services(){
     };
 
     const handleDelete = async (id) => {
-        if (!isAuthenticated()) {
-            alert('Please sign in or sign up to delete services.');
-            navigate('/signin');
-            return;
-        }
         if (window.confirm('Are you sure you want to delete this service?')) {
             setLoading(true);
             setError(''); // Clear previous errors
@@ -118,19 +99,6 @@ function Services(){
             {/* Service Form */}
             <div className="service-form-section">
                 <h4>{editingId ? 'Edit Service' : 'Add New Service'}</h4>
-                {!isAuthenticated() && (
-                    <div style={{ 
-                        padding: '15px', 
-                        backgroundColor: '#fff3cd', 
-                        border: '1px solid #ffc107', 
-                        borderRadius: '4px', 
-                        marginBottom: '15px' 
-                    }}>
-                        <p style={{ margin: 0 }}>
-                            <strong>Authentication Required:</strong> Please <Link to="/signin" style={{ color: '#007bff' }}>sign in</Link> or <Link to="/signup" style={{ color: '#007bff' }}>sign up</Link> to add or edit services.
-                        </p>
-                    </div>
-                )}
                 <form onSubmit={handleSubmit} className="service-form">
                     {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <input
@@ -196,28 +164,20 @@ function Services(){
                                 <h3>{service.title}</h3>
                                 <p>{service.description}</p>
                                 <div className="service-actions">
-                                    {isAuthenticated() ? (
-                                        <>
-                                            <button 
-                                                onClick={() => handleEdit(service)}
-                                                className="edit-btn"
-                                                disabled={loading}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button 
-                                                onClick={() => handleDelete(service._id)}
-                                                className="delete-btn"
-                                                disabled={loading}
-                                            >
-                                                Delete
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <p style={{ fontSize: '0.9em', color: '#666' }}>
-                                            <Link to="/signin" style={{ color: '#007bff' }}>Sign in</Link> to edit or delete
-                                        </p>
-                                    )}
+                                    <button 
+                                        onClick={() => handleEdit(service)}
+                                        className="edit-btn"
+                                        disabled={loading}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(service._id)}
+                                        className="delete-btn"
+                                        disabled={loading}
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         </div>
