@@ -1,9 +1,13 @@
 // src/api.js
 // Backend API configuration
 // The frontend connects to the backend API, which handles MongoDB connections
-// For local development: use http://localhost:3000/api
-// For production: use your deployed backend URL (e.g., https://comp229-backend-f9fs.onrender.com/api)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+// For local development: uses http://localhost:3000/api
+// For production: automatically uses https://comp229-backend-f9fs.onrender.com/api
+// You can override with VITE_API_URL environment variable on Render
+const API_BASE_URL = import.meta.env.VITE_API_URL || 
+  (import.meta.env.PROD 
+    ? 'https://comp229-backend-f9fs.onrender.com/api' 
+    : 'http://localhost:3000/api');
 
 // Generic API call function
 const apiCall = async (endpoint, options = {}) => {
