@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { usersAPI, handleApiError } from '../api';
 
 function Users() {
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -43,16 +47,21 @@ function Users() {
     // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (editingId && !isAuthenticated()) {
+            alert('Please sign in to edit users');
+            navigate('/signin');
+            return;
+        }
         if (loading) return; // Prevent duplicate submissions
         setLoading(true);
         setError(''); // Clear previous errors
         try {
             if (editingId) {
-                // Update existing user
+                // Update existing user - requires authentication
                 await usersAPI.update(editingId, formData);
                 alert('User updated successfully!');
             } else {
-                // Create new user
+                // Create new user - public (no auth required)
                 await usersAPI.create(formData);
                 alert('User added successfully!');
             }
@@ -68,6 +77,11 @@ function Users() {
 
     // Handle edit button click
     const handleEdit = (user) => {
+        if (!isAuthenticated()) {
+            alert('Please sign in to edit users');
+            navigate('/signin');
+            return;
+        }
         setFormData({
             firstname: user.firstname,
             lastname: user.lastname,
@@ -85,6 +99,11 @@ function Users() {
 
     // Handle user deletion
     const handleDelete = async (id) => {
+        if (!isAuthenticated()) {
+            alert('Please sign in to delete users');
+            navigate('/signin');
+            return;
+        }
         if (window.confirm('Are you sure you want to delete this user?')) {
             setLoading(true);
             setError(''); // Clear previous errors
@@ -107,6 +126,17 @@ function Users() {
             {/* User Form */}
             <div className="user-form-section">
                 <h4>{editingId ? 'Edit User' : 'Add New User'}</h4>
+                {editingId && !isAuthenticated() && (
+                    <div style={{ 
+                        padding: '10px', 
+                        backgroundColor: '#fff3cd', 
+                        border: '1px solid #ffc107', 
+                        borderRadius: '4px',
+                        marginBottom: '15px'
+                    }}>
+                        <p>You must be signed in to edit users. <Link to="/signin">Sign in</Link> or <Link to="/signup">Sign up</Link></p>
+                    </div>
+                )}
                 <form onSubmit={handleSubmit} className="user-form">
                     {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <div className="form-row">
@@ -159,12 +189,12 @@ function Users() {
                             onChange={handleInputChange}
                             required
                             placeholder={editingId ? "Enter new password" : "Enter password"}
-                            disabled={loading}
+                            disabled={loading || (editingId && !isAuthenticated())}
                         />
                     </div>
                     
                     <div className="form-actions">
-                        <button type="submit" className="submit-btn" disabled={loading}>
+                        <button type="submit" className="submit-btn" disabled={loading || (editingId && !isAuthenticated())}>
                             {loading ? 'Processing...' : (editingId ? 'Update User' : 'Add User')}
                         </button>
                         {editingId && (

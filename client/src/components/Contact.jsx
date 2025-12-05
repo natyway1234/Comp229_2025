@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { contactsAPI, handleApiError } from '../api';
 
 function Contact() {
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -42,6 +46,11 @@ function Contact() {
     // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!isAuthenticated()) {
+            alert('Please sign in to add or edit contacts');
+            navigate('/signin');
+            return;
+        }
         if (loading) return; // Prevent duplicate submissions
         setLoading(true);
         setError(''); // Clear previous errors
@@ -67,6 +76,11 @@ function Contact() {
 
     // Handle edit button click
     const handleEdit = (contact) => {
+        if (!isAuthenticated()) {
+            alert('Please sign in to edit contacts');
+            navigate('/signin');
+            return;
+        }
         setFormData({
             firstname: contact.firstname,
             lastname: contact.lastname,
@@ -83,6 +97,11 @@ function Contact() {
 
     // Handle contact deletion
     const handleDelete = async (id) => {
+        if (!isAuthenticated()) {
+            alert('Please sign in to delete contacts');
+            navigate('/signin');
+            return;
+        }
         if (window.confirm('Are you sure you want to delete this contact?')) {
             setLoading(true);
             setError(''); // Clear previous errors
@@ -117,6 +136,17 @@ function Contact() {
                 {/* Interactive Contact Form */}
                 <div className="contact-form-container">
                 <h4>{editingId ? 'Edit Contact' : 'Send Me a Message'}</h4>
+                {!isAuthenticated() && (
+                    <div style={{ 
+                        padding: '10px', 
+                        backgroundColor: '#fff3cd', 
+                        border: '1px solid #ffc107', 
+                        borderRadius: '4px',
+                        marginBottom: '15px'
+                    }}>
+                        <p>You must be signed in to add or edit contacts. <Link to="/signin">Sign in</Link> or <Link to="/signup">Sign up</Link></p>
+                    </div>
+                )}
                 <form onSubmit={handleSubmit} className="contact-form">
                     {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <div className="form-row">
@@ -155,12 +185,12 @@ function Contact() {
                             value={formData.email}
                             onChange={handleInputChange}
                             required
-                            disabled={loading}
+                            disabled={loading || !isAuthenticated()}
                         />
                     </div>
                     
                     <div className="form-actions">
-                        <button type="submit" className="submit-btn" disabled={loading}>
+                        <button type="submit" className="submit-btn" disabled={loading || !isAuthenticated()}>
                             {loading ? 'Processing...' : (editingId ? 'Update Contact' : 'Send Message')}
                         </button>
                         {editingId && (

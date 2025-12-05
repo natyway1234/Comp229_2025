@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { servicesAPI, handleApiError } from '../api';
 
 function Services(){
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -39,6 +43,11 @@ function Services(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!isAuthenticated()) {
+            alert('Please sign in to add or edit services');
+            navigate('/signin');
+            return;
+        }
         if (loading) return; // Prevent duplicate submissions
         setLoading(true);
         setError(''); // Clear previous errors
@@ -64,6 +73,11 @@ function Services(){
 
     // Handle edit button click
     const handleEdit = (service) => {
+        if (!isAuthenticated()) {
+            alert('Please sign in to edit services');
+            navigate('/signin');
+            return;
+        }
         setFormData({
             title: service.title,
             description: service.description
@@ -78,6 +92,11 @@ function Services(){
     };
 
     const handleDelete = async (id) => {
+        if (!isAuthenticated()) {
+            alert('Please sign in to delete services');
+            navigate('/signin');
+            return;
+        }
         if (window.confirm('Are you sure you want to delete this service?')) {
             setLoading(true);
             setError(''); // Clear previous errors
@@ -99,6 +118,17 @@ function Services(){
             {/* Service Form */}
             <div className="service-form-section">
                 <h4>{editingId ? 'Edit Service' : 'Add New Service'}</h4>
+                {!isAuthenticated() && (
+                    <div style={{ 
+                        padding: '10px', 
+                        backgroundColor: '#fff3cd', 
+                        border: '1px solid #ffc107', 
+                        borderRadius: '4px',
+                        marginBottom: '15px'
+                    }}>
+                        <p>You must be signed in to add or edit services. <Link to="/signin">Sign in</Link> or <Link to="/signup">Sign up</Link></p>
+                    </div>
+                )}
                 <form onSubmit={handleSubmit} className="service-form">
                     {error && <p style={{color: 'red'}}>Error: {error}</p>}
                     <input
@@ -116,10 +146,10 @@ function Services(){
                         value={formData.description}
                         onChange={handleInputChange}
                         required
-                        disabled={loading}
+                        disabled={loading || !isAuthenticated()}
                     />
                     <div className="form-actions">
-                        <button type="submit" disabled={loading}>
+                        <button type="submit" disabled={loading || !isAuthenticated()}>
                             {loading ? 'Processing...' : (editingId ? 'Update Service' : 'Add Service')}
                         </button>
                         {editingId && (

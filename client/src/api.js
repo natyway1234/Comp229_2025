@@ -9,17 +9,31 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ||
     ? 'https://comp229-backend-f9fs.onrender.com/api' 
     : 'http://localhost:3000/api');
 
+// Get token from localStorage
+const getToken = () => {
+  return localStorage.getItem('token');
+};
+
 // Generic API call function
 const apiCall = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
+  const token = getToken();
+  
   try {
     console.log(`Making API call to: ${url}`);
 
+    const headers = {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    };
+
+    // Add Authorization header if token exists
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
+      headers,
       ...options,
     });
 
@@ -110,4 +124,16 @@ export const usersAPI = {
   }),
   delete: (id) => apiCall(`/users/${id}`, { method: 'DELETE' }),
   deleteAll: () => apiCall('/users', { method: 'DELETE' }),
+};
+
+// Authentication API
+export const authAPI = {
+  signup: (userData) => apiCall('/auth/signup', {
+    method: 'POST',
+    body: JSON.stringify(userData),
+  }),
+  signin: (credentials) => apiCall('/auth/signin', {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+  }),
 };
