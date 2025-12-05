@@ -21,7 +21,7 @@ function Services(){
 
     const loadServices = async () => {
         setLoading(true);
-        setError(''); // Clear errors when loading
+        setError('');
         try {
             const data = await servicesAPI.getAll();
             setServices(data);
@@ -32,7 +32,6 @@ function Services(){
         }
     };
 
-    // Handle form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -48,16 +47,14 @@ function Services(){
             navigate('/signin');
             return;
         }
-        if (loading) return; // Prevent duplicate submissions
+        if (loading) return;
         setLoading(true);
-        setError(''); // Clear previous errors
+        setError('');
         try {
             if (editingId) {
-                // Update existing service
                 await servicesAPI.update(editingId, formData);
                 alert('Service updated successfully!');
             } else {
-                // Create new service
                 await servicesAPI.create(formData);
                 alert('Service added successfully!');
             }
@@ -71,7 +68,6 @@ function Services(){
         }
     };
 
-    // Handle edit button click
     const handleEdit = (service) => {
         if (!isAuthenticated()) {
             alert('Please sign in to edit services');
@@ -85,7 +81,6 @@ function Services(){
         setEditingId(service._id);
     };
 
-    // Handle cancel edit
     const handleCancelEdit = () => {
         setFormData({ title: '', description: '' });
         setEditingId(null);
@@ -99,7 +94,7 @@ function Services(){
         }
         if (window.confirm('Are you sure you want to delete this service?')) {
             setLoading(true);
-            setError(''); // Clear previous errors
+            setError('');
             try {
                 await servicesAPI.delete(id);
                 loadServices();
@@ -115,7 +110,6 @@ function Services(){
         <div className="services-page">
             <h3>Services</h3>
             
-            {/* Service Form */}
             <div className="service-form-section">
                 <h4>{editingId ? 'Edit Service' : 'Add New Service'}</h4>
                 {!isAuthenticated() && (
@@ -161,7 +155,6 @@ function Services(){
                 </form>
             </div>
 
-            {/* Static Services Display */}
             <h4>Featured Services</h4>
             <div className="services-grid">
                 <div className="service-card">
@@ -180,7 +173,6 @@ function Services(){
                 </div>
             </div>
 
-            {/* Dynamic Services from Backend */}
             <h4>Stored Services ({services.length})</h4>
             {loading ? (
                 <p>Loading services...</p>
@@ -218,7 +210,6 @@ function Services(){
                 </div>
             )}
             
-            {/* Footer */}
             <footer className="site-footer">
                 <p>&copy; 2025 Natnael Zewday. All rights reserved.</p>
             </footer>

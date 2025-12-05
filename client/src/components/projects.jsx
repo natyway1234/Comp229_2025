@@ -24,7 +24,6 @@ const data = [
           
 ]
 
-// Memoized Project Card Component for better performance
 const ProjectCard = memo(({ project, onEdit, onDelete, isAuthenticated, loading }) => {
     const formattedDate = useMemo(() => {
         return new Date(project.completion).toLocaleDateString();
@@ -85,7 +84,7 @@ function Projects(){
 
     const loadProjects = useCallback(async () => {
         setInitialLoading(true);
-        setError(''); // Clear errors when loading
+        setError('');
         try {
             console.log('Loading projects...');
             const data = await projectsAPI.getAll();
@@ -99,10 +98,8 @@ function Projects(){
         }
     }, []);
 
-    // Get authentication status
     const authenticated = useMemo(() => isAuthenticated(), [isAuthenticated]);
 
-    // Handle form input changes
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -118,16 +115,14 @@ function Projects(){
             navigate('/signin');
             return;
         }
-        if (formLoading) return; // Prevent duplicate submissions
+        if (formLoading) return;
         setFormLoading(true);
-        setError(''); // Clear previous errors
+        setError('');
         try {
             if (editingId) {
-                // Update existing project
                 await projectsAPI.update(editingId, formData);
                 alert('Project updated successfully!');
             } else {
-                // Create new project
                 await projectsAPI.create(formData);
                 alert('Project added successfully!');
             }
@@ -141,14 +136,12 @@ function Projects(){
         }
     }, [authenticated, editingId, formData, formLoading, navigate, loadProjects]);
 
-    // Handle edit button click
     const handleEdit = useCallback((project) => {
         if (!authenticated) {
             alert('Please sign in to edit projects');
             navigate('/signin');
             return;
         }
-        // Format date for input field (YYYY-MM-DD)
         const completionDate = new Date(project.completion).toISOString().split('T')[0];
         setFormData({
             title: project.title,
@@ -158,7 +151,6 @@ function Projects(){
         setEditingId(project._id);
     }, [authenticated, navigate]);
 
-    // Handle cancel edit
     const handleCancelEdit = useCallback(() => {
         setFormData({ title: '', completion: '', description: '' });
         setEditingId(null);
@@ -172,7 +164,7 @@ function Projects(){
         }
         if (window.confirm('Are you sure you want to delete this project?')) {
             setFormLoading(true);
-            setError(''); // Clear previous errors
+            setError('');
             try {
                 await projectsAPI.delete(id);
                 loadProjects();
@@ -189,7 +181,6 @@ function Projects(){
         <div className="projects-page">
             <h3>Projects</h3>
             
-            {/* Project Form */}
             <div className="project-form-section">
                 <h4>{editingId ? 'Edit Project' : 'Add New Project'}</h4>
                 {!authenticated && (
@@ -246,11 +237,9 @@ function Projects(){
                 </form>
             </div>
 
-            {/* Static Projects Display */}
             <h4>Featured Projects</h4>
             <ListComponent items={data}/>
             
-            {/* Dynamic Projects from Backend */}
             <h4>Stored Projects ({projects.length})</h4>
             {initialLoading ? (
                 <p>Loading projects...</p>
@@ -274,7 +263,6 @@ function Projects(){
                 </div>
             )}
             
-            {/* Footer */}
             <footer className="site-footer">
                 <p>&copy; 2025 Natnael Zewday. All rights reserved.</p>
             </footer>

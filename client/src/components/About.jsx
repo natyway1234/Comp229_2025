@@ -1,12 +1,9 @@
-// Image served from public directory
-
 function About(){
     return (
         <div className="about-page">
             <h3>About Me</h3>
 
             <div className="about-main-content">
-                {/* Hero Section */}
                 <div className="about-hero">
                     <div className="about-photo">
                         <img 
@@ -26,7 +23,6 @@ function About(){
                     </div>
                 </div>
 
-                {/* Journey and Skills Side by Side */}
                 <div className="about-content-grid">
                     <div className="about-story">
                         <h4>My Journey</h4>
@@ -66,7 +62,6 @@ function About(){
                     </div>
                 </div>
 
-                {/* Resume Download Section - Full Width */}
                 <div className="resume-section">
                     <h4>Resume</h4>
                     <p>Download my resume to learn more about my professional experience and skills.</p>
@@ -80,7 +75,6 @@ function About(){
                 </div>
             </div>
 
-            {/* Footer */}
             <footer className="site-footer">
                 <p>&copy; 2025 Natnael Zewday. All rights reserved.</p>
             </footer>

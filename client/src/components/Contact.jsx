@@ -16,7 +16,6 @@ function Contact() {
         email: ''
     });
 
-    // Handle form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -25,14 +24,13 @@ function Contact() {
         }));
     };
 
-    // Load contacts when component mounts
     useEffect(() => {
         loadContacts();
     }, []);
 
     const loadContacts = async () => {
         setLoading(true);
-        setError(''); // Clear errors when loading
+        setError('');
         try {
             const data = await contactsAPI.getAll();
             setContacts(data);
@@ -43,7 +41,6 @@ function Contact() {
         }
     };
 
-    // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isAuthenticated()) {
@@ -51,16 +48,14 @@ function Contact() {
             navigate('/signin');
             return;
         }
-        if (loading) return; // Prevent duplicate submissions
+        if (loading) return;
         setLoading(true);
-        setError(''); // Clear previous errors
+        setError('');
         try {
             if (editingId) {
-                // Update existing contact
                 await contactsAPI.update(editingId, formData);
                 alert('Contact updated successfully!');
             } else {
-                // Create new contact
                 await contactsAPI.create(formData);
                 alert('Contact added successfully!');
             }
@@ -74,7 +69,6 @@ function Contact() {
         }
     };
 
-    // Handle edit button click
     const handleEdit = (contact) => {
         if (!isAuthenticated()) {
             alert('Please sign in to edit contacts');
@@ -89,13 +83,11 @@ function Contact() {
         setEditingId(contact._id);
     };
 
-    // Handle cancel edit
     const handleCancelEdit = () => {
         setFormData({ firstname: '', lastname: '', email: '' });
         setEditingId(null);
     };
 
-    // Handle contact deletion
     const handleDelete = async (id) => {
         if (!isAuthenticated()) {
             alert('Please sign in to delete contacts');
@@ -104,7 +96,7 @@ function Contact() {
         }
         if (window.confirm('Are you sure you want to delete this contact?')) {
             setLoading(true);
-            setError(''); // Clear previous errors
+            setError('');
             try {
                 await contactsAPI.delete(id);
                 loadContacts();
@@ -121,9 +113,7 @@ function Contact() {
         <div className="contact-page">
             <h3>Contact Me</h3>
             
-            {/* Main Contact Content */}
             <div className="contact-main-content">
-                {/* Contact Information Panel */}
                 <div className="contact-info-panel">
                     <h4>Get In Touch</h4>
                     <div className="contact-details">
@@ -133,7 +123,6 @@ function Contact() {
                     </div>
                 </div>
 
-                {/* Interactive Contact Form */}
                 <div className="contact-form-container">
                 <h4>{editingId ? 'Edit Contact' : 'Send Me a Message'}</h4>
                 {!isAuthenticated() && (
@@ -203,7 +192,6 @@ function Contact() {
                 </div>
             </div>
 
-            {/* Display Stored Contacts */}
             <div className="stored-contacts-section">
                 <h4>Stored Contacts ({contacts.length})</h4>
                 {loading ? (
@@ -243,7 +231,6 @@ function Contact() {
                 )}
             </div>
             
-            {/* Footer */}
             <footer className="site-footer">
                 <p>&copy; 2025 Natnael Zewday. All rights reserved.</p>
             </footer>

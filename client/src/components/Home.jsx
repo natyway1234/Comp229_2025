@@ -6,7 +6,6 @@ function Home(){
             <h1 className="hero-title">Welcome to my portfolio</h1>
             <p className="hero-subtitle">Full-Stack Developer & Digital Solutions Architect</p>
             
-            {/* Mission Statement */}
             <section className="mission-card">
                 <h2>My Mission</h2>
                 <p>
@@ -23,7 +22,6 @@ function Home(){
                 </p>
             </section>
             
-            {/* Navigation Buttons */}
             <div className="cta-row">
                 <Link to="/about" className="nav-button">
                     Learn About Me
@@ -39,7 +37,6 @@ function Home(){
                 </Link>
             </div>
             
-            {/* Footer */}
             <footer className="site-footer">
                 <p>&copy; 2025 Natnael Zewday. All rights reserved.</p>
             </footer>

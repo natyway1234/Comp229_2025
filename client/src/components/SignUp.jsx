@@ -21,7 +21,7 @@ function SignUp() {
             ...prev,
             [name]: value
         }));
-        setError(''); // Clear error on input change
+        setError('');
     };
 
     const handleSubmit = async (e) => {
@@ -34,10 +34,9 @@ function SignUp() {
             const response = await authAPI.signup(formData);
             console.log('Signup response:', response);
             if (response && response.success) {
-                // Store token and user info
                 signIn(response.token, response.user);
                 alert('Account created successfully!');
-                navigate('/projects'); // Redirect to projects page
+                navigate('/projects');
             } else {
                 setError(response?.message || 'Signup failed. Please try again.');
             }

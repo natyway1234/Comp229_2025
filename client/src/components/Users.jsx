@@ -17,7 +17,6 @@ function Users() {
         password: ''
     });
 
-    // Handle form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -26,14 +25,13 @@ function Users() {
         }));
     };
 
-    // Load users when component mounts
     useEffect(() => {
         loadUsers();
     }, []);
 
     const loadUsers = async () => {
         setLoading(true);
-        setError(''); // Clear errors when loading
+        setError('');
         try {
             const data = await usersAPI.getAll();
             setUsers(data);
@@ -44,7 +42,6 @@ function Users() {
         }
     };
 
-    // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (editingId && !isAuthenticated()) {
@@ -52,16 +49,14 @@ function Users() {
             navigate('/signin');
             return;
         }
-        if (loading) return; // Prevent duplicate submissions
+        if (loading) return;
         setLoading(true);
-        setError(''); // Clear previous errors
+        setError('');
         try {
             if (editingId) {
-                // Update existing user - requires authentication
                 await usersAPI.update(editingId, formData);
                 alert('User updated successfully!');
             } else {
-                // Create new user - public (no auth required)
                 await usersAPI.create(formData);
                 alert('User added successfully!');
             }
@@ -75,7 +70,6 @@ function Users() {
         }
     };
 
-    // Handle edit button click
     const handleEdit = (user) => {
         if (!isAuthenticated()) {
             alert('Please sign in to edit users');
@@ -86,18 +80,16 @@ function Users() {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            password: '' // Don't pre-fill password for security
+            password: ''
         });
         setEditingId(user._id);
     };
 
-    // Handle cancel edit
     const handleCancelEdit = () => {
         setFormData({ firstname: '', lastname: '', email: '', password: '' });
         setEditingId(null);
     };
 
-    // Handle user deletion
     const handleDelete = async (id) => {
         if (!isAuthenticated()) {
             alert('Please sign in to delete users');
@@ -106,7 +98,7 @@ function Users() {
         }
         if (window.confirm('Are you sure you want to delete this user?')) {
             setLoading(true);
-            setError(''); // Clear previous errors
+            setError('');
             try {
                 await usersAPI.delete(id);
                 loadUsers();
@@ -123,7 +115,6 @@ function Users() {
         <div className="users-page">
             <h3>User Management</h3>
             
-            {/* User Form */}
             <div className="user-form-section">
                 <h4>{editingId ? 'Edit User' : 'Add New User'}</h4>
                 {editingId && !isAuthenticated() && (
@@ -206,7 +197,6 @@ function Users() {
                 </form>
             </div>
 
-            {/* Display Stored Users */}
             <div className="stored-users-section">
                 <h4>Stored Users ({users.length})</h4>
                 {loading ? (
@@ -247,7 +237,6 @@ function Users() {
                 )}
             </div>
             
-            {/* Footer */}
             <footer className="site-footer">
                 <p>&copy; 2025 Natnael Zewday. All rights reserved.</p>
             </footer>

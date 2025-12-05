@@ -19,7 +19,7 @@ function SignIn() {
             ...prev,
             [name]: value
         }));
-        setError(''); // Clear error on input change
+        setError('');
     };
 
     const handleSubmit = async (e) => {
@@ -32,10 +32,9 @@ function SignIn() {
             const response = await authAPI.signin(formData);
             console.log('Signin response:', response);
             if (response && response.success) {
-                // Store token and user info
                 signIn(response.token, response.user);
                 alert('Signed in successfully!');
-                navigate('/projects'); // Redirect to projects page
+                navigate('/projects');
             } else {
                 setError(response?.message || 'Sign in failed. Please check your credentials.');
             }

@@ -1,20 +1,12 @@
-// src/api.js
-// Backend API configuration
-// The frontend connects to the backend API, which handles MongoDB connections
-// For local development: uses http://localhost:3000/api
-// For production: automatically uses https://comp229-backend-f9fs.onrender.com/api
-// You can override with VITE_API_URL environment variable on Render
 const API_BASE_URL = import.meta.env.VITE_API_URL || 
   (import.meta.env.PROD 
     ? 'https://comp229-backend-f9fs.onrender.com/api' 
     : 'http://localhost:3000/api');
 
-// Get token from localStorage
 const getToken = () => {
   return localStorage.getItem('token');
 };
 
-// Generic API call function
 const apiCall = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
   const token = getToken();
@@ -27,7 +19,6 @@ const apiCall = async (endpoint, options = {}) => {
       ...options.headers,
     };
 
-    // Add Authorization header if token exists
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
@@ -51,7 +42,6 @@ const apiCall = async (endpoint, options = {}) => {
   }
 };
 
-// Utility function to handle API errors in components
 export const handleApiError = (error, setError) => {
   const message = error.message || 'An unexpected error occurred';
   if (setError) {
@@ -62,7 +52,6 @@ export const handleApiError = (error, setError) => {
   }
 };
 
-// Contacts API
 export const contactsAPI = {
   getAll: () => apiCall('/contacts'),
   getById: (id) => apiCall(`/contacts/${id}`),
@@ -78,7 +67,6 @@ export const contactsAPI = {
   deleteAll: () => apiCall('/contacts', { method: 'DELETE' }),
 };
 
-// Projects API
 export const projectsAPI = {
   getAll: () => apiCall('/projects'),
   getById: (id) => apiCall(`/projects/${id}`),
@@ -94,7 +82,6 @@ export const projectsAPI = {
   deleteAll: () => apiCall('/projects', { method: 'DELETE' }),
 };
 
-// Services API
 export const servicesAPI = {
   getAll: () => apiCall('/services'),
   getById: (id) => apiCall(`/services/${id}`),
@@ -110,7 +97,6 @@ export const servicesAPI = {
   deleteAll: () => apiCall('/services', { method: 'DELETE' }),
 };
 
-// Users API
 export const usersAPI = {
   getAll: () => apiCall('/users'),
   getById: (id) => apiCall(`/users/${id}`),
@@ -126,7 +112,6 @@ export const usersAPI = {
   deleteAll: () => apiCall('/users', { method: 'DELETE' }),
 };
 
-// Authentication API
 export const authAPI = {
   signup: (userData) => apiCall('/auth/signup', {
     method: 'POST',

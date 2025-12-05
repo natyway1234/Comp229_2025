@@ -1,4 +1,3 @@
-// Main App component that sets up routing for the portfolio website
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
