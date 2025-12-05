@@ -1,0 +1,994 @@
+{
+    "title": "MyPortfolio-test",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 2870,
+            "height": 1271,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "url": "https://comp229-2025-2olw.onrender.com/",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "https://comp229-2025-2olw.onrender.com/",
+                    "title": "Vite + React"
+                }
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/SIGN UP"
+                ],
+                [
+                    "a:nth-of-type(8)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div/nav/a[8]"
+                ],
+                [
+                    "pierce/a:nth-of-type(8)"
+                ],
+                [
+                    "text/Sign Up"
+                ]
+            ],
+            "offsetY": 28.921875,
+            "offsetX": 29.359375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/First Name:"
+                ],
+                [
+                    "#firstname"
+                ],
+                [
+                    "xpath///*[@id=\"firstname\"]"
+                ],
+                [
+                    "pierce/#firstname"
+                ]
+            ],
+            "offsetY": 15.609375,
+            "offsetX": 333.5
+        },
+        {
+            "type": "change",
+            "value": "Natnael",
+            "selectors": [
+                [
+                    "aria/First Name:"
+                ],
+                [
+                    "#firstname"
+                ],
+                [
+                    "xpath///*[@id=\"firstname\"]"
+                ],
+                [
+                    "pierce/#firstname"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "change",
+            "value": "Zewday",
+            "selectors": [
+                [
+                    "aria/Last Name:"
+                ],
+                [
+                    "#lastname"
+                ],
+                [
+                    "xpath///*[@id=\"lastname\"]"
+                ],
+                [
+                    "pierce/#lastname"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "change",
+            "value": "natyway1234@gmail.com",
+            "selectors": [
+                [
+                    "aria/Email:"
+                ],
+                [
+                    "#email"
+                ],
+                [
+                    "xpath///*[@id=\"email\"]"
+                ],
+                [
+                    "pierce/#email"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Password:"
+                ],
+                [
+                    "#password"
+                ],
+                [
+                    "xpath///*[@id=\"password\"]"
+                ],
+                [
+                    "pierce/#password"
+                ]
+            ],
+            "offsetY": 27.828125,
+            "offsetX": 135.5
+        },
+        {
+            "type": "change",
+            "value": "Conferencing4387",
+            "selectors": [
+                [
+                    "aria/Password:"
+                ],
+                [
+                    "#password"
+                ],
+                [
+                    "xpath///*[@id=\"password\"]"
+                ],
+                [
+                    "pierce/#password"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Sign Up[role=\"button\"]"
+                ],
+                [
+                    "button"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/form/button"
+                ],
+                [
+                    "pierce/button"
+                ]
+            ],
+            "offsetY": 15.828125,
+            "offsetX": 272.5
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Sign Out"
+                ],
+                [
+                    "div.header-container button"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/button"
+                ],
+                [
+                    "pierce/div.header-container button"
+                ],
+                [
+                    "text/Sign Out"
+                ]
+            ],
+            "offsetY": 17.5,
+            "offsetX": 81.515625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/SIGN IN"
+                ],
+                [
+                    "a:nth-of-type(7)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div/nav/a[7]"
+                ],
+                [
+                    "pierce/a:nth-of-type(7)"
+                ],
+                [
+                    "text/Sign In"
+                ]
+            ],
+            "offsetY": 23.921875,
+            "offsetX": 33.390625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Email:"
+                ],
+                [
+                    "#email"
+                ],
+                [
+                    "xpath///*[@id=\"email\"]"
+                ],
+                [
+                    "pierce/#email"
+                ]
+            ],
+            "offsetY": 16.609375,
+            "offsetX": 331.5
+        },
+        {
+            "type": "change",
+            "value": "natyway1234@gmail.com",
+            "selectors": [
+                [
+                    "aria/Email:"
+                ],
+                [
+                    "#email"
+                ],
+                [
+                    "xpath///*[@id=\"email\"]"
+                ],
+                [
+                    "pierce/#email"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Password:"
+                ],
+                [
+                    "#password"
+                ],
+                [
+                    "xpath///*[@id=\"password\"]"
+                ],
+                [
+                    "pierce/#password"
+                ]
+            ],
+            "offsetY": 26.015625,
+            "offsetX": 252.5
+        },
+        {
+            "type": "change",
+            "value": "Conferencing4387",
+            "selectors": [
+                [
+                    "aria/Password:"
+                ],
+                [
+                    "#password"
+                ],
+                [
+                    "xpath///*[@id=\"password\"]"
+                ],
+                [
+                    "pierce/#password"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Sign In[role=\"button\"]"
+                ],
+                [
+                    "button"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/form/button"
+                ],
+                [
+                    "pierce/button"
+                ]
+            ],
+            "offsetY": 16.015625,
+            "offsetX": 278.5
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/PROJECTS"
+                ],
+                [
+                    "a:nth-of-type(3)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[3]"
+                ],
+                [
+                    "pierce/a:nth-of-type(3)"
+                ]
+            ],
+            "offsetY": 15.831790924072266,
+            "offsetX": 53.875
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/PROJECTS"
+                ],
+                [
+                    "a:nth-of-type(3)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[3]"
+                ],
+                [
+                    "pierce/a:nth-of-type(3)"
+                ]
+            ],
+            "offsetY": 35.921875,
+            "offsetX": 50.875
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Project Title"
+                ],
+                [
+                    "input[type='text']"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/div[1]/input[1]"
+                ],
+                [
+                    "pierce/input[type='text']"
+                ]
+            ],
+            "offsetY": 24.796875,
+            "offsetX": 421
+        },
+        {
+            "type": "change",
+            "value": "web app",
+            "selectors": [
+                [
+                    "aria/Project Title"
+                ],
+                [
+                    "input[type='text']"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/div[1]/input[1]"
+                ],
+                [
+                    "pierce/input[type='text']"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "input[type='date']"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/div[1]/input[2]"
+                ],
+                [
+                    "pierce/input[type='date']"
+                ]
+            ],
+            "offsetY": 38.796875,
+            "offsetX": 513
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "input[type='date']"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/div[1]/input[2]"
+                ],
+                [
+                    "pierce/input[type='date']"
+                ]
+            ],
+            "offsetY": 30.796875,
+            "offsetX": 514
+        },
+        {
+            "type": "change",
+            "value": "2025-12-10",
+            "selectors": [
+                [
+                    "input[type='date']"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/div[1]/input[2]"
+                ],
+                [
+                    "pierce/input[type='date']"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Description"
+                ],
+                [
+                    "textarea"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/textarea"
+                ],
+                [
+                    "pierce/textarea"
+                ]
+            ],
+            "offsetY": 36.796875,
+            "offsetX": 604
+        },
+        {
+            "type": "change",
+            "value": "I",
+            "selectors": [
+                [
+                    "aria/Description"
+                ],
+                [
+                    "textarea"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/textarea"
+                ],
+                [
+                    "pierce/textarea"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "keyUp",
+            "key": "i",
+            "target": "main"
+        },
+        {
+            "type": "change",
+            "value": "I created a web app",
+            "selectors": [
+                [
+                    "aria/Description"
+                ],
+                [
+                    "textarea"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/textarea"
+                ],
+                [
+                    "pierce/textarea"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Add Project"
+                ],
+                [
+                    "div.projects-page button"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/div[2]/button"
+                ],
+                [
+                    "pierce/div.projects-page button"
+                ],
+                [
+                    "text/Add Project"
+                ]
+            ],
+            "offsetY": 14.796875,
+            "offsetX": 131
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/SERVICES"
+                ],
+                [
+                    "a:nth-of-type(4)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[4]"
+                ],
+                [
+                    "pierce/a:nth-of-type(4)"
+                ],
+                [
+                    "text/Services"
+                ]
+            ],
+            "offsetY": 31.897369384765625,
+            "offsetX": 71.65625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Service Title"
+                ],
+                [
+                    "input"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/input"
+                ],
+                [
+                    "pierce/input"
+                ]
+            ],
+            "offsetY": 32.796875,
+            "offsetX": 551
+        },
+        {
+            "type": "change",
+            "value": "UI designing",
+            "selectors": [
+                [
+                    "aria/Service Title"
+                ],
+                [
+                    "input"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/input"
+                ],
+                [
+                    "pierce/input"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "form"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form"
+                ],
+                [
+                    "pierce/form"
+                ],
+                [
+                    "text/UI designingAdd"
+                ]
+            ],
+            "offsetY": 63.796875,
+            "offsetX": 336
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Description"
+                ],
+                [
+                    "textarea"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/textarea"
+                ],
+                [
+                    "pierce/textarea"
+                ]
+            ],
+            "offsetY": 31.796875,
+            "offsetX": 327
+        },
+        {
+            "type": "change",
+            "value": "we create a clean UI for web apps",
+            "selectors": [
+                [
+                    "aria/Description"
+                ],
+                [
+                    "textarea"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/textarea"
+                ],
+                [
+                    "pierce/textarea"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Add Service"
+                ],
+                [
+                    "div.services-page button"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/form/div/button"
+                ],
+                [
+                    "pierce/div.services-page button"
+                ],
+                [
+                    "text/Add Service"
+                ]
+            ],
+            "offsetY": 31.7247314453125,
+            "offsetX": 86
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/CONTACT"
+                ],
+                [
+                    "a:nth-of-type(5)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[5]"
+                ],
+                [
+                    "pierce/a:nth-of-type(5)"
+                ],
+                [
+                    "text/Contact"
+                ]
+            ],
+            "offsetY": 20.916885375976562,
+            "offsetX": 42.828125
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/First Name *"
+                ],
+                [
+                    "#firstname"
+                ],
+                [
+                    "xpath///*[@id=\"firstname\"]"
+                ],
+                [
+                    "pierce/#firstname"
+                ]
+            ],
+            "offsetY": 17.328125,
+            "offsetX": 112
+        },
+        {
+            "type": "change",
+            "value": "Natnael",
+            "selectors": [
+                [
+                    "aria/First Name *"
+                ],
+                [
+                    "#firstname"
+                ],
+                [
+                    "xpath///*[@id=\"firstname\"]"
+                ],
+                [
+                    "pierce/#firstname"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "change",
+            "value": "Zewday",
+            "selectors": [
+                [
+                    "aria/Last Name *"
+                ],
+                [
+                    "#lastname"
+                ],
+                [
+                    "xpath///*[@id=\"lastname\"]"
+                ],
+                [
+                    "pierce/#lastname"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "change",
+            "value": "natyway1234@gmail.com",
+            "selectors": [
+                [
+                    "aria/Email Address *"
+                ],
+                [
+                    "#email"
+                ],
+                [
+                    "xpath///*[@id=\"email\"]"
+                ],
+                [
+                    "pierce/#email"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Send Message"
+                ],
+                [
+                    "div.contact-page button"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[1]/div[2]/form/div[3]/button"
+                ],
+                [
+                    "pierce/div.contact-page button"
+                ],
+                [
+                    "text/Send Message"
+                ]
+            ],
+            "offsetY": 23.5982666015625,
+            "offsetX": 72
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/PROJECTS"
+                ],
+                [
+                    "a:nth-of-type(3)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[3]"
+                ],
+                [
+                    "pierce/a:nth-of-type(3)"
+                ],
+                [
+                    "text/Projects"
+                ]
+            ],
+            "offsetY": 20.915245056152344,
+            "offsetX": 84.875
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Delete"
+                ],
+                [
+                    "button.delete-btn"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[3]/div/div/button[2]"
+                ],
+                [
+                    "pierce/button.delete-btn"
+                ],
+                [
+                    "text/Delete"
+                ]
+            ],
+            "offsetY": 8.178955078125,
+            "offsetX": 28.734375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/SERVICES"
+                ],
+                [
+                    "a:nth-of-type(4)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[4]"
+                ],
+                [
+                    "pierce/a:nth-of-type(4)"
+                ],
+                [
+                    "text/Services"
+                ]
+            ],
+            "offsetY": 32.921756744384766,
+            "offsetX": 54.65625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Delete"
+                ],
+                [
+                    "button.delete-btn"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[3]/div/div/div/button[2]"
+                ],
+                [
+                    "pierce/button.delete-btn"
+                ],
+                [
+                    "text/Delete"
+                ]
+            ],
+            "offsetY": 15.640625,
+            "offsetX": 29.390625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/USERS"
+                ],
+                [
+                    "a:nth-of-type(6)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[6]"
+                ],
+                [
+                    "pierce/a:nth-of-type(6)"
+                ],
+                [
+                    "text/Users"
+                ]
+            ],
+            "offsetY": 18.921875,
+            "offsetX": 22.90625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/CONTACT"
+                ],
+                [
+                    "a:nth-of-type(5)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/a[5]"
+                ],
+                [
+                    "pierce/a:nth-of-type(5)"
+                ],
+                [
+                    "text/Contact"
+                ]
+            ],
+            "offsetY": 20.921875,
+            "offsetX": 55.828125
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Delete"
+                ],
+                [
+                    "button.delete-btn"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[2]/div[2]/div/div/div[2]/button[2]"
+                ],
+                [
+                    "pierce/button.delete-btn"
+                ],
+                [
+                    "text/Delete"
+                ]
+            ],
+            "offsetY": 15.28125,
+            "offsetX": 52.15625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Sign Out"
+                ],
+                [
+                    "div.header-container button"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div/div[1]/nav/button"
+                ],
+                [
+                    "pierce/div.header-container button"
+                ],
+                [
+                    "text/Sign Out"
+                ]
+            ],
+            "offsetY": 8.5,
+            "offsetX": 18.515625
+        }
+    ]
+}
